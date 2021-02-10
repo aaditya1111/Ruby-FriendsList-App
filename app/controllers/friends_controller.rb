@@ -12,7 +12,7 @@ class FriendsController < ApplicationController
 
 	#GET /friends/new
 	def new
-		@friends = Friend.new
+		@friend = Friend.new
 	end
 
 	#GET /friends/1/edit
@@ -21,7 +21,7 @@ class FriendsController < ApplicationController
 
 	#POST /friends or /friends.json
 	def create
-		@friend = Friend.new(friend.params)
+		@friend = Friend.new(friend_params)
 
 		respond_to do |format|
 			if @friend.save
@@ -34,18 +34,19 @@ class FriendsController < ApplicationController
 		end
 	end
 
+
 	#PATCH/PUT /friends/1 or /friends/1.json
 	def update
-    respond_to do |format|
-      if @friend.update(friend_params)
-        format.html { redirect_to @friend, notice: "Friend was successfully updated." }
-        format.json { render :show, status: :ok, location: @friend }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @friend.errors, status: :unprocessable_entity }
-      end
-    end
-  end
+		respond_to do |format|
+			if @friend.update(friend_params)
+				format.html { redirect_to @friend, notice: "Friend was successfully updated." }
+				format.json { render :show, status: :ok, location: @friend }
+			else
+				format.html { render :edit, status: :unprocessable_entity }
+				format.json { render json: @friend.errors, status: :unprocessable_entity }
+			end
+		end
+	end
 
 	#DELETE /friends/1 or friends/1.json
 	def destroy 
@@ -64,7 +65,7 @@ class FriendsController < ApplicationController
 
 		#only allow a list of trusted parameters through.
 		def friend_params
-			params.require(:friend).permit(:first_name, :last_name, :email, :phone, :twiter)
+			params.require(:friend).permit(:first_name, :last_name, :email, :phone, :twitter)
 		end
 end
 
